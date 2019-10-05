@@ -13,40 +13,40 @@ pipeline {
                     git branch: 'master', credentialsId: 'github', url: 'https://github.com/mariuszdolata/testRepo.git'
                 }
             }
-         }
+        }
 
 
-            stage('Compile'){
-                agent { docker {
-                            image 'mariuszdolata/jdk12:0.1'
-                            args '-v $HOME/.m2:/root/.m2'
-                        }
-                }
-                steps {
-                    script {
-                        echo "Compile process inside docker container"
-                            sh 'mvn compile'
-
-
-                    }
-                }
-            }
-
-            stage('Unit tests'){
+        stage('Compile'){
             agent { docker {
-                        image 'mariuszdolata/jdk12:0.1'
-                        args '-v $HOME/.m2:/root/.m2'
-                    }
-            }
-                steps {
-                    script {
-                        echo "unit tests execution inside docker container"
-
-                            sh 'mvn test'
-
-                    }
+                    image 'mariuszdolata/jdk12:0.1'
+                    args '-v $HOME/.m2:/root/.m2'
                 }
             }
+            steps {
+                script {
+                    echo "Compile process inside docker container"
+                    sh 'mvn compile'
+                }
+            }
+        }
 
+        stage('Unit tests'){
+            agent { docker {
+                    image 'mariuszdolata/jdk12:0.1'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
+            steps {
+                script {
+                    echo "unit tests execution inside docker container"
+                    sh 'mvn test'
+                }
+            }
+        }
+        post {
+            always {
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: './target/site/', reportFiles: './target/site/jacoco/index.html', reportName: 'Coverage report by jacoco', reportTitles: ''])
+            }
+        }
     }
 }
