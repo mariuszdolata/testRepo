@@ -17,8 +17,7 @@ pipeline {
 
 
             stage('Compile'){
-                agent {
-                 docker{
+                agent { docker {
                             image 'mariuszdolata/jdk12:0.1'
                             args '-v $HOME/.m2:/root/.m2'
                         }
@@ -34,8 +33,7 @@ pipeline {
             }
 
             stage('Unit tests'){
-            agent {
-             docker{
+            agent { docker {
                         image 'mariuszdolata/jdk12:0.1'
                         args '-v $HOME/.m2:/root/.m2'
                     }
