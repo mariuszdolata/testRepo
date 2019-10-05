@@ -9,31 +9,41 @@ pipeline {
             steps {
                 echo 'Checkout Repository'
                 script {
-                sh 'rm -rf' //clean workspace
+                    sh 'rm -rf' //clean workspace
                     git branch: 'master', credentialsId: 'github', url: 'https://github.com/mariuszdolata/testRepo.git'
                 }
             }
+         }
+    }
+    agent {
+        docker{
+            image 'mariuszdolata/jdk12:0.1'
+            args '-v $HOME/.m2:/root/.m2'
         }
-        stage('Compile'){
-            steps {
-                script {
-                    echo "Compile process inside docker container"
-                    docker.image('mariuszdolata/jdk12:0.1').inside {
-                        sh 'mvn compile'
+        stages {
+
+            stage('Compile'){
+                steps {
+                    script {
+                        echo "Compile process inside docker container"
+                        docker.image('mariuszdolata/jdk12:0.1').inside {
+                            sh 'mvn compile'
+                        }
                     }
                 }
             }
-        }
 
-        stage('Unit tests'){
-            steps {
-                script {
-                    echo "unit tests execution inside docker container"
-                    docker.image('mariuszdolata/jdk12:0.1').inside {
-                        sh 'mvn test'
+            stage('Unit tests'){
+                steps {
+                    script {
+                        echo "unit tests execution inside docker container"
+                        docker.image('mariuszdolata/jdk12:0.1').inside {
+                            sh 'mvn test'
+                        }
                     }
                 }
             }
         }
     }
+
 }
