@@ -16,11 +16,10 @@ pipeline {
         }
         stage('Compile'){
             steps {
-                echo "Compile process inside docker container"
-
                 script {
+                    echo "Compile process inside docker container"
                     docker.image('${props.DOCKER_IMAGE}').inside {
-                    sh 'mvn compile'
+                        sh 'mvn compile'
                     }
                 }
             }
@@ -28,9 +27,8 @@ pipeline {
 
         stage('Unit tests'){
             steps {
-                echo "unit tests execution inside docker container"
-
                 script {
+                    echo "unit tests execution inside docker container"
                     docker.image('${props.DOCKER_IMAGE}').inside {
                         sh 'mvn test'
                     }
