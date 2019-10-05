@@ -49,5 +49,25 @@ pipeline {
                 }
             }
         }
+
+        stage('Static Analysis'){
+            agent { docker {
+                    image 'mariuszdolata/jdk12:0.1'
+                    args '-v $HOME/.m2:/root/.m2'
+                    }
+            }
+            steps {
+                script {
+                    echo "static analysis execution inside docker container"
+                    sh 'mvn site'
+                }
+            }
+            post {
+                always {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'findbugs.html', reportName: 'Findbugs report', reportTitles: 'findbugs'])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'project-info.html', reportName: 'Project-info', reportTitles: 'Project-info'])
+                }
+            }
+        }
     }
 }
