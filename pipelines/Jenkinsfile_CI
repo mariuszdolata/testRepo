@@ -42,10 +42,10 @@ pipeline {
                     sh 'mvn test'
                 }
             }
-        }
-        post {
-            always {
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: './target/site/', reportFiles: './target/site/jacoco/index.html', reportName: 'Coverage report by jacoco', reportTitles: ''])
+            post {
+                always {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: './target/site/', reportFiles: './target/site/jacoco/index.html', reportName: 'Coverage report by jacoco', reportTitles: ''])
+                }
             }
         }
     }
