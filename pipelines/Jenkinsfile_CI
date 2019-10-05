@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Repository') {
+            steps {
+                echo 'Checkout Repository'
+
+                script {
+                    git branch: 'master', credentialsId: 'github', url: 'https://github.com/mariuszdolata/testRepo.git'
+                }
+            }
+        }
+    }
+}
