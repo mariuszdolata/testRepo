@@ -9,7 +9,7 @@ pipeline {
             steps {
                 echo 'Checkout Repository'
                 script {
-                    sh 'rm -rf' //clean workspace
+                    cleanWs()
                     git branch: 'master', credentialsId: 'github', url: 'https://github.com/mariuszdolata/testRepo.git'
                 }
             }
