@@ -26,9 +26,9 @@ pipeline {
                 steps {
                     script {
                         echo "Compile process inside docker container"
-                        docker.image('mariuszdolata/jdk12:0.1').inside {
+
                             sh 'mvn compile'
-                        }
+
                     }
                 }
             }
@@ -37,9 +37,9 @@ pipeline {
                 steps {
                     script {
                         echo "unit tests execution inside docker container"
-                        docker.image('mariuszdolata/jdk12:0.1').inside {
+
                             sh 'mvn test'
-                        }
+
                     }
                 }
             }
