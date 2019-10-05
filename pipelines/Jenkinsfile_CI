@@ -66,6 +66,8 @@ pipeline {
                 always {
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'findbugs.html', reportName: 'Findbugs report', reportTitles: 'findbugs'])
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'project-info.html', reportName: 'Project-info', reportTitles: 'Project-info'])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'pmd.html', reportName: 'PMD report', reportTitles: 'pmd'])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'cpd.html', reportName: 'CPD report', reportTitles: 'cpd'])
                 }
             }
         }
