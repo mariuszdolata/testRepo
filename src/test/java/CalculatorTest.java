@@ -20,4 +20,10 @@ public class CalculatorTest {
     public void multiplicationTest(){
         assertEquals(this.calculator.multiplication(1,2),2);
     }
+
+    @Test
+    public void multiplicationTest2(){
+        assertEquals(this.calculator.multiplication(4,5),20);
+    }
+
 }
