@@ -60,6 +60,7 @@ pipeline {
                 script {
                     echo "static analysis execution inside docker container"
                     sh 'mvn site'
+                    sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=b901c5f57cbb6931f3e5cedaba97ce9e48ff6729'
                 }
             }
             post {
